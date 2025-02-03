@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,7 +15,7 @@ export class HomeComponent {
   showLoginModal = false;
   showSignupModal = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.fetchBackendMessage();
@@ -35,7 +36,8 @@ export class HomeComponent {
   }
 
   openLoginModal() {
-    this.showLoginModal = true;
+    /* navigate to login page */
+    this.router.navigate(['/login']); 
   }
 
   closeLoginModal() {
