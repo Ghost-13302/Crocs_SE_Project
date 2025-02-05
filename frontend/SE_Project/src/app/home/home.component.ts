@@ -45,7 +45,8 @@ export class HomeComponent {
   }
 
   openSignupModal() {
-    this.showSignupModal = true;
+    /* navigate to registration page */
+    this.router.navigate(['/registration']);
   }
 
   closeSignupModal() {
