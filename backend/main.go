@@ -1,16 +1,28 @@
 package main
 
 import (
-    "fmt"
-    "net/http"
+	"backend/database"
+	_ "backend/docs"
+	"backend/routes"
+
+	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
+// @title    The Grid Backend API
+// @version  0.0
+// @host     localhost:8080
+// @BasePath /
 func main() {
-    http.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
-        w.Header().Set("Content-Type", "application/json")
-        fmt.Fprintf(w, `{"message": "Hello from Golang backend!"}`)
-    })
-
-    fmt.Println("Server running on http://localhost:8080")
-    http.ListenAndServe(":8080", nil)
+	// initialize database
+	database.InitDatabase()
+	// initialize router
+	router := gin.Default()
+	routes.AuthRoutes(router)
+	routes.UsersRoutes(router)
+	// swagger endpoint
+	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+	// start server
+	router.Run(":8080")
 }
